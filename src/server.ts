@@ -1,15 +1,12 @@
 import express, {Express, Router , Request , Response} from 'express';
 import dotenv from 'dotenv';
+import router from './routes';
 
 dotenv.config();
 
 const app:Express = express();
 
-const router : Router = express.Router()
-
-router.use('/',(req:Request ,res:Response ) => {
-    res.send('hello redis!')
-})
+app.use(router);
 
 const port = process.env.PORT || 3000;
 
