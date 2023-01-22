@@ -1,9 +1,12 @@
 import express , {Router, Request , Response} from 'express';
-
+import * as coinController from './controllers/coin.controller';
 const router: Router = express.Router();
 
+const getRoutePrefix= () => '/api/v1';
 
-router.all('/api/v1/*',(req:Request,res:Response) => {
+router.get(`${getRoutePrefix()}/coin/:id`,coinController.getCoinDetails);
+
+router.all(`${getRoutePrefix()}/*`,(req:Request,res:Response) => {
     res.status(200).json({'message': 'hello redis!'});
 })
 
