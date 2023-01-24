@@ -7,7 +7,7 @@ A simple express project that integrates with CoinGecko API to give information 
 3. Redis
 
 ### External APIs Used
-1. CoinGecko - https://pro-api.coingecko.com/api/v3
+1. CoinGecko - https://api.coingecko.com/api/v3
 
 ### Run Server
 ```bash
