@@ -18,7 +18,7 @@ export const setCache = async (key:string,toBeCachedValue:string,ttl:number):Pro
     return await redisClient.setEx(key,ttl,toBeCachedValue);
 }
 
-export const getCache = async (key:string,fetcher:()=>Promise<any>):Promise<string> => {
+export const getCache = async <T>(key:string,fetcher:()=>Promise<T>):Promise<string> => {
     let exists = await redisClient.exists(key);
 
     if(!exists) {

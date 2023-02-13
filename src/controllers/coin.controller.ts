@@ -6,9 +6,9 @@ export const getCoinDetails = async (req:Request , res : Response) : Promise<any
     try{
 
         const coinId:string = req.params.id;
-        
+
         console.time("Execution Time");
-        const coinData = await getCache(coinId,()=>{return getCoinById(coinId)});
+        const coinData = await getCache<Coin>(coinId,()=>{return getCoinById(coinId)});
         console.timeEnd("Execution Time");
 
         return res.status(200).json(JSON.parse(coinData));
