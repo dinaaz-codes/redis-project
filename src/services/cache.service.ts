@@ -1,7 +1,7 @@
 import { createClient } from "redis";
 import { getConstant } from "../config/constants";
 
-export const DEFAULT_TIME_TO_LIVE = 240;
+const DEFAULT_TIME_TO_LIVE = 240;
 
 const redisClient = createClient({ url: getConstant("REDIS_URL") });
 
@@ -18,7 +18,7 @@ redisClient.on("error", (error) => {
 export const setCache = async (
   key: string,
   value: unknown,
-  ttl?: number
+  ttl: number = DEFAULT_TIME_TO_LIVE
 ): Promise<string> => {
   return redisClient.set(key, JSON.stringify(value), { EX: ttl });
 };
