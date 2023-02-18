@@ -10,7 +10,16 @@ A simple express project that integrates with CoinGecko API to give information 
 1. CoinGecko - https://api.coingecko.com/api/v3
 
 ### Run Server
+- Install Dependencies
 ```bash
 npm install
+```
+- Production Mode
+```bash
 npm run start
 ```
+- Development Mode
+```bash
+npm run start:dev
+```
+
