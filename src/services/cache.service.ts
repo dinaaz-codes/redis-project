@@ -1,30 +1,28 @@
-import {createClient} from 'redis';
+import { createClient } from "redis";
+import { getConstant } from "../config/constants";
 
-export const DEFAULT_TIME_TO_LIVE=240;
+export const DEFAULT_TIME_TO_LIVE = 240;
 
-const redisClient = createClient();
+const redisClient = createClient({ url: getConstant("REDIS_URL") });
 
 redisClient.connect();
 
-redisClient.on('connect',()=>{
-    console.log('[REDIS] : connected!');
+redisClient.on("connect", () => {
+  console.log("[REDIS] : connected!");
 });
 
-redisClient.on('error',(error)=>{
-    console.log(`[REDIS] : error ${error}`);
+redisClient.on("error", (error) => {
+  console.log(`[REDIS] : error ${error}`);
 });
 
-export const setCache = async (key:string,toBeCachedValue:string,ttl:number):Promise<string>=> {
-    return await redisClient.setEx(key,ttl,toBeCachedValue);
-}
+export const setCache = async (
+  key: string,
+  toBeCachedValue: unknown,
+  ttl?: number
+): Promise<string> => {
+  return redisClient.set(key, JSON.stringify(toBeCachedValue), { EX: ttl });
+};
 
-export const getCache = async <T>(key:string,fetcher:()=>Promise<T>):Promise<string> => {
-    let exists = await redisClient.exists(key);
-
-    if(!exists) {
-            const toBeCached = await fetcher();
-            await setCache(key,JSON.stringify(toBeCached),DEFAULT_TIME_TO_LIVE)
-    }
-
-    return await redisClient.get(key);
-}
+export const getCache = async <T>(key: string): Promise<T> => {
+  return JSON.parse(await redisClient.get(key)) as T;
+};
