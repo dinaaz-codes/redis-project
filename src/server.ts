@@ -1,15 +1,15 @@
-import express, {Express, Router , Request , Response} from 'express';
-import dotenv from 'dotenv';
-import router from './routes';
+import express, { Express } from "express";
+import router from "./routes";
+import { getConstant, validateEnvVar } from "./config/constants";
 
-dotenv.config();
-
-const app:Express = express();
+const app: Express = express();
 
 app.use(router);
 
-const port = process.env.PORT || 3000;
+validateEnvVar();
 
-app.listen(port, () =>{
-    console.log(`[SERVER] : started , running on ${port}`);
+const port = getConstant("PORT") || 3000;
+
+app.listen(port, () => {
+  console.log(`[SERVER] : started , running on ${port}`);
 });
