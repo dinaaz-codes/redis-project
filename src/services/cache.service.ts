@@ -17,10 +17,10 @@ redisClient.on("error", (error) => {
 
 export const setCache = async (
   key: string,
-  toBeCachedValue: unknown,
+  value: unknown,
   ttl?: number
 ): Promise<string> => {
-  return redisClient.set(key, JSON.stringify(toBeCachedValue), { EX: ttl });
+  return redisClient.set(key, JSON.stringify(value), { EX: ttl });
 };
 
 export const getCache = async <T>(key: string): Promise<T> => {
